@@ -1,0 +1,14 @@
+{% extends "databaze/layout.html" %}
+
+{% block title %}Přihlášení{% endblock %}
+
+{% block body %}
+<h1>Přihlaste se do systému</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button class="btn" type="submit">Přihlásit</button>
+</form>
+{% endblock %}

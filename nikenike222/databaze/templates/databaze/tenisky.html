@@ -1,0 +1,95 @@
+{% extends "databaze/layout.html" %}
+
+{% block title %}Tenisky{% endblock %}
+
+{% block body %}
+<h1>Seznam tenisek</h1>
+
+<form method="get" class="filter-box">
+    <input type="text" name="hledat" placeholder="Vyhledat model..." value="{{ hledat }}">
+
+    <select name="kategorie">
+        <option value="">Všechny kategorie</option>
+        {% for k in kategorie %}
+            <option value="{{ k.id_kategorie }}" {% if vybrana_kategorie == k.id_kategorie|stringformat:"s" %}selected{% endif %}>
+                {{ k.nazev_kategorie }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button class="btn" type="submit">Filtrovat</button>
+    <a class="btn secondary" href="/databaze/tenisky/">Reset</a>
+</form>
+
+<table>
+    <tr>
+        <th>Model</th>
+        <th>Kategorie</th>
+        <th>Velikost</th>
+        <th>Sklad</th>
+        <th>Barva</th>
+        <th>Materiál</th>
+        <th>Cena</th>
+        <th>Množství</th>
+        <th>Dostupnost</th>
+        <th>Akce</th>
+    </tr>
+
+    {% for t in tenisky %}
+    <tr>
+        <td>{{ t.nazev_modelu }}</td>
+        <td>{{ t.id_kategorie.nazev_kategorie }}</td>
+        <td>{{ t.id_velikosti.eu_velikost }}</td>
+        <td>{{ t.id_sklad.nazev_skladu }}</td>
+        <td>{{ t.barva }}</td>
+        <td>{{ t.material }}</td>
+        <td>{{ t.cena }} Kč</td>
+        <td>{{ t.mnozstvi }}</td>
+
+        <td>
+            {% if t.mnozstvi > 0 %}
+                <span class="badge ano">ANO</span>
+            {% else %}
+                <span class="badge ne">NE</span>
+            {% endif %}
+        </td>
+
+        <td>
+            {% if t.mnozstvi > 0 %}
+                {% if user.is_authenticated %}
+                    <a class="btn" href="/databaze/objednat/{{ t.id_tenisky }}/">
+                        Objednat
+                    </a>
+                {% else %}
+                    <a class="btn secondary" href="/accounts/login/">
+                        Přihlásit
+                    </a>
+                {% endif %}
+            {% else %}
+                <span class="empty">Vyprodáno</span>
+            {% endif %}
+
+            {% if user.is_superuser %}
+                <br><br>
+                <a class="btn secondary" href="/admin/databaze/tenisky/{{ t.id_tenisky }}/change/">
+                    Upravit
+                </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="10" class="empty">Žádné tenisky nebyly nalezeny.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+{% if user.is_superuser %}
+<a class="btn" href="/admin/databaze/tenisky/add/">
+    Přidat tenisky
+</a>
+{% endif %}
+
+{% endblock %}

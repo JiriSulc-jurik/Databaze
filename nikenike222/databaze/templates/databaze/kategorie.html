@@ -1,0 +1,30 @@
+{% extends "databaze/layout.html" %}
+
+{% block title %}Kategorie{% endblock %}
+
+{% block body %}
+<h1>Kategorie</h1>
+
+<table>
+    <tr>
+        <th>Název kategorie</th>
+        <th>Popis</th>
+    </tr>
+
+    {% for k in kategorie %}
+    <tr>
+        <td>{{ k.nazev_kategorie }}</td>
+        <td>{{ k.popis }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+{% if user.is_superuser %}
+<a class="btn" href="/admin/databaze/kategorie/">
+    Upravit kategorie
+</a>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Evidence tenisek{% endblock %}</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        nav {
+            background: #020617;
+            padding: 18px 40px;
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #e5e7eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover { color: #38bdf8; }
+
+        .container {
+            max-width: 1250px;
+            margin: 35px auto;
+            background: #111827;
+            padding: 35px;
+            border-radius: 18px;
+        }
+
+        h1 { font-size: 38px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #1e293b;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #2563eb, #06b6d4);
+            color: white;
+            padding: 9px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .secondary {
+            background: #475569;
+        }
+
+        .badge {
+            padding: 6px 13px;
+            border-radius: 999px;
+            font-weight: bold;
+        }
+
+        .ano {
+            background: #14532d;
+            color: #bbf7d0;
+        }
+
+        .ne {
+            background: #7f1d1d;
+            color: #fecaca;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: #1e293b;
+            padding: 22px;
+            border-radius: 16px;
+        }
+
+        .stat-card h2 {
+            color: #38bdf8;
+            font-size: 36px;
+        }
+
+        .filter-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .filter-box input,
+        .filter-box select {
+            padding: 12px;
+            border-radius: 10px;
+            background: #020617;
+            color: white;
+            border: 1px solid #334155;
+        }
+
+        .empty {
+            color: #94a3b8;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/databaze/">Domů</a>
+    <a href="/databaze/tenisky/">Tenisky</a>
+    <a href="/databaze/kategorie/">Kategorie</a>
+
+    {% if user.is_authenticated %}
+
+        {% if user.is_superuser %}
+            <a href="/databaze/sklad/">Sklad</a>
+            <a href="/databaze/uzivatele/">Uživatelé</a>
+            <a href="/admin/databaze/objednavka/">Objednávky</a>
+            <a href="/admin/">Admin</a>
+        {% endif %}
+
+        <form action="/accounts/logout/" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn secondary">Odhlásit</button>
+        </form>
+
+    {% else %}
+        <a href="/accounts/login/">Přihlásit</a>
+    {% endif %}
+</nav>
+
+<div class="container">
+    {% block body %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% extends "databaze/layout.html" %}
+
+{% block title %}Domů{% endblock %}
+
+{% block body %}
+<h1>Informační systém evidence tenisek</h1>
+
+<p>
+Tento web slouží k evidenci tenisek, kategorií, velikostí
+a dostupnosti zboží.
+</p>
+
+<div class="cards">
+    <div class="stat-card">
+        <h2>{{ pocet_tenisek }}</h2>
+        <p>Počet modelů tenisek</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ pocet_kategorii }}</h2>
+        <p>Počet kategorií</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ pocet_kusu }}</h2>
+        <p>Celkem kusů skladem</p>
+    </div>
+
+    {% if user.is_superuser %}
+    <div class="stat-card">
+        <h2>{{ pocet_skladu }}</h2>
+        <p>Počet skladů</p>
+    </div>
+    {% endif %}
+</div>
+
+<a class="btn" href="/databaze/tenisky/">Zobrazit tenisky</a>
+
+{% if user.is_superuser %}
+<a class="btn" href="/admin/">Správa v adminu</a>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "databaze/layout.html" %}
+
+{% block title %}Uživatelé{% endblock %}
+
+{% block body %}
+<h1>Uživatelé systému</h1>
+
+<table>
+    <tr>
+        <th>Jméno</th>
+        <th>Příjmení</th>
+        <th>Email</th>
+        <th>Role</th>
+    </tr>
+
+    {% for u in uzivatele %}
+    <tr>
+        <td>{{ u.jmeno }}</td>
+        <td>{{ u.prijmeni }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.role }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a class="btn" href="/admin/databaze/uzivatel/">Upravit uživatele</a>
+{% endblock %}

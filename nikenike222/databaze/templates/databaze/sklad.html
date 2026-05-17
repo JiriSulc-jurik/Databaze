@@ -1,0 +1,23 @@
+{% extends "databaze/layout.html" %}
+
+{% block title %}Sklad{% endblock %}
+
+{% block body %}
+<h1>Sklady</h1>
+
+<table>
+    <tr>
+        <th>Název skladu</th>
+        <th>Město</th>
+    </tr>
+
+    {% for s in sklad %}
+    <tr>
+        <td>{{ s.nazev_skladu }}</td>
+        <td>{{ s.mesto }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a class="btn" href="/admin/databaze/sklad/">Upravit sklady</a>
+{% endblock %}
